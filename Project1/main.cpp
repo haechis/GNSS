@@ -18,20 +18,11 @@ int main(void) {
 	std::ifstream readFile;
 
 	readFile.open(gf.File_obs);
-
-
-	
-	//GNSS_f *setSite(site);
-	//GNSS_f *setDOY("032");
-
-	std::string Site = "SEOS"; 
-	std::string DOY = "032";
+	// 내일 할 일: obs 파일 한 줄씩 읽기 -> gnss cpp 이용~
+	readFile.close();
 
 	
-	std::string File_obs = Site + DOY + "0.22o";
-	std::string File_nav = Site + DOY + "0.22n";
-		
-	
 
+	
 
 }
