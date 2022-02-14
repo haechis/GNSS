@@ -1,6 +1,8 @@
 #pragma once
 #include <string>
 #include<iostream>
+#include<vector>
+#include <fstream>
 
 class GNSS_f
 {
@@ -14,6 +16,9 @@ public:
 	void setSite(std::string Site);
 	void setDOY(std::string DOY);
 	void setOBS();
-	
+
+	int ReadEPH(std::string fp);
+
 
 };
+

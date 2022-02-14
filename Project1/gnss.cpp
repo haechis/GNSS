@@ -1,5 +1,7 @@
 #include "gnss.h"
 //#include <string>
+#define MAXBUFLEN   1024
+
 GNSS_f::GNSS_f() {};
 void GNSS_f::setOBS() {
 	// create file name
@@ -13,4 +15,24 @@ void GNSS_f::setSite(std::string Site) {
 }
 void GNSS_f::setDOY(std::string DOY) {
 	this->DOY = DOY;
+}
+
+
+int GNSS_f::ReadEPH(std::string fp) {
+	// File_Nav
+
+	std::vector<std::string> lines;
+	std::string line;
+
+	std::ifstream input_file(fp);
+	if (!input_file.is_open()) {
+		std::cerr << "Could not open the file - '" << fp << std::endl;
+		return EXIT_FAILURE;
+	}
+
+	while (std::getline(input_file, line)) {
+		std::cout << line << std::endl;
+	}
+	
+
 }

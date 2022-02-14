@@ -15,7 +15,11 @@ int main(void) {
 	// std::cout << gf.File_nav;
 	
 	// create file name
+	std::string filename(gf.File_nav);
 	std::ifstream readFile;
+
+	int a = gf.ReadEPH(filename);
+
 
 	readFile.open(gf.File_obs);
 	// 내일 할 일: obs 파일 한 줄씩 읽기 -> gnss cpp 이용~
