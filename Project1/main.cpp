@@ -21,7 +21,7 @@ int main(void) {
 	int a = gf.ReadEPH(filename);
 
 
-	readFile.open(gf.File_obs);
+	readFile.open(gf.File_nav);
 	// 내일 할 일: obs 파일 한 줄씩 읽기 -> gnss cpp 이용~
 	readFile.close();
 

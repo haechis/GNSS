@@ -7,7 +7,7 @@ void GNSS_f::setOBS() {
 	// create file name
 	File_obs = this->Site + this->DOY + "0.22o";
 	File_nav = this->Site + this->DOY + "0.22n";
-	std::cout << File_nav;
+	//std::cout << File_nav;
 }
 void GNSS_f::setSite(std::string Site) {
 	this->Site = Site;
@@ -30,8 +30,26 @@ int GNSS_f::ReadEPH(std::string fp) {
 		return EXIT_FAILURE;
 	}
 
+	double al[] = { 0.0, 0.0, 0.0, 0.0 };
+	double be[] = { 0.0, 0.0, 0.0, 0.0 };
+
+	int b = 0;
+
 	while (std::getline(input_file, line)) {
-		std::cout << line << std::endl;
+		b++;
+		//line.
+		//if (strstr(line))
+
+		//al[0] = std::stof(line.substr(2,12));
+
+
+
+		std::cout << line.substr(2, 12) << std::endl;
+	
+	
+		if (b == 10)
+			break;
+
 	}
 	
 
