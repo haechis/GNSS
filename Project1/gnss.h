@@ -4,6 +4,7 @@
 #include<vector>
 #include <fstream>
 #include<cstring>
+#include<cmath>
 
 class GNSS_f
 {
@@ -17,6 +18,7 @@ public:
 	void setSite(std::string Site);
 	void setDOY(std::string DOY);
 	void setOBS();
+	double str2double(std::string s, int a, int b);
 
 	int ReadEPH(std::string fp);
 

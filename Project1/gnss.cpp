@@ -17,6 +17,12 @@ void GNSS_f::setDOY(std::string DOY) {
 	this->DOY = DOY;
 }
 
+double GNSS_f::str2double(std::string s, int a, int b) {
+	//int c = b - 3;
+	double x = pow(10, std::stof(s.substr(b - 2, b)));
+	return std::stof(s.substr(a, b - 4)) * x;
+}
+
 
 int GNSS_f::ReadEPH(std::string fp) {
 	// File_Nav
@@ -48,15 +54,31 @@ int GNSS_f::ReadEPH(std::string fp) {
 		//std::cout << line_al << std::endl;
 		if (line_al.compare("ION ALPHA") == 0) {
  
-			
-			al[0] = std::stof(line.substr(4, 9) + "E" + line.substr(11, 13));
-			std::cout << al[0] << std::endl;
+			al[0] = str2double(line, 3, 13);
+			al[1] = str2double(line, 15, 25);
+			al[2] = str2double(line, 27, 37);
+			al[3] = str2double(line, 39, 49);
+			//std::cout << al[3] << std::endl;
+
+
+			//al[0] = std::stof(line.substr(4, 9) + "E" + line.substr(11, 13));
+			//std::cout << al[0] << std::endl;
+			//std::cout << "str2double" << str2double(line, 4, 13) << std::endl;
 			//std::cout << "(1) check" << std::endl;
 			//std::cout << line_al << std::endl;
 			//std::cout << "check" << std::endl;
 
 		}
-		
+		std::string line_be = line.substr(60, 67);
+		if (line_be.compare("ION BETA") == 0) {
+
+			be[0] = str2double(line, 3, 13);
+			be[1] = str2double(line, 15, 25);
+			be[2] = str2double(line, 27, 37);
+			be[3] = str2double(line, 39, 49);
+
+
+		}
 
 		//if (strcmp(line.substr(60, 60 + 9), "ION ALPHA"))
 
