@@ -3,6 +3,7 @@
 #include<iostream>
 #include<vector>
 #include <fstream>
+#include<cstring>
 
 class GNSS_f
 {

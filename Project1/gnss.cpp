@@ -42,9 +42,25 @@ int GNSS_f::ReadEPH(std::string fp) {
 
 		//al[0] = std::stof(line.substr(2,12));
 
+		//std::string* ptr = std::strstr(line.substr(60, 60 + 9), "ION ALPHA");
 
+		std::string line_al = line.substr(60, 68);
+		//std::cout << line_al << std::endl;
+		if (line_al.compare("ION ALPHA") == 0) {
+ 
+			
+			al[0] = std::stof(line.substr(4, 9) + "E" + line.substr(11, 13));
+			std::cout << al[0] << std::endl;
+			//std::cout << "(1) check" << std::endl;
+			//std::cout << line_al << std::endl;
+			//std::cout << "check" << std::endl;
 
-		std::cout << line.substr(2, 12) << std::endl;
+		}
+		
+
+		//if (strcmp(line.substr(60, 60 + 9), "ION ALPHA"))
+
+		//std::cout << line.substr(2, 12) << std::endl;
 	
 	
 		if (b == 10)
