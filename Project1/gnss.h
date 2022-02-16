@@ -21,7 +21,7 @@ public:
 	double str2double(std::string s, int a, int b);
 
 	int ReadEPH(std::string fp);
-
+	struct eph;
 
 };
 
