@@ -13,6 +13,7 @@ private:
 	std::string DOY;
 public:
 	GNSS_f();
+	
 	std::string File_obs;
 	std::string File_nav;
 	void setSite(std::string Site);
@@ -20,7 +21,9 @@ public:
 	void setOBS();
 	double str2double(std::string s, int a, int b);
 
-	int ReadEPH(std::string fp);
+	void ReadEPH(std::string fp);
+	void ReadOBS(std::string fp);
+
 	struct eph {
 		char GNSS_type; // G R E C J ...
 
@@ -85,6 +88,11 @@ public:
 			IODC = V[28];
 		}
 	};
-
+	std::vector<eph> ephs;
+	 
+	struct MEAS {
+		
+	};
+	std::vector<MEAS> meas_s;
 };
 

@@ -1,9 +1,9 @@
 #include "gnss.h"
 //#include <string>
 
-#define MAXBUFLEN   1024
-
+ 
 GNSS_f::GNSS_f() {};
+
 void GNSS_f::setOBS() {
 	// create file name
 	File_obs = this->Site + this->DOY + "0.22o";
@@ -18,10 +18,10 @@ void GNSS_f::setDOY(std::string DOY) {
 	this->DOY = DOY;
 }
 
-struct GNSS_f::eph {
+//struct GNSS_f::eph {};
 	
 
-};
+
 
 double GNSS_f::str2double(std::string s, int a, int b) {
 	//int c = b - 3;
@@ -30,16 +30,16 @@ double GNSS_f::str2double(std::string s, int a, int b) {
 }
 
 
-int GNSS_f::ReadEPH(std::string fp) {
+void GNSS_f::ReadEPH(std::string fp) {
+	//std::vector<eph> ephs;
 	// File_Nav
-
-	std::vector<std::string> lines;
+	
+	//std::vector<std::string> lines;
 	std::string line;
 
 	std::ifstream input_file(fp);
 	if (!input_file.is_open()) {
 		std::cerr << "Could not open the file - '" << fp << std::endl;
-		return EXIT_FAILURE;
 	}
 
 	double al[] = { 0.0, 0.0, 0.0, 0.0 };
@@ -94,6 +94,7 @@ int GNSS_f::ReadEPH(std::string fp) {
 	
 
 	// navigation - GPS
+	int kkk = 0;
 	while (std::getline(input_file, line)) {
 		double V[31];
 		int prn_n = std::stoi(line.substr(0, 2));
@@ -161,11 +162,33 @@ int GNSS_f::ReadEPH(std::string fp) {
 		//V[31] = str2double(line, 41, 59);
 		//V[32] = str2double(line, 60, 78);
 
+		ephs.push_back(eph(prn_n, V));
+
+		// std::vector<eph> &a = eph(prn_n,V);
+		// a(prn_n, V);
+		//std::cout << kkk++;
 		
-		std::vector<eph> &a = eph(prn_n,V);
-		a(prn_n, V);
-		
-		break;
 	}
+	//std::cout << ephs[5].prn;
+}
+
+void GNSS_f::ReadOBS(std::string fp) {
+	std::string line;
+
+	std::ifstream input_file(fp);
+	if (!input_file.is_open()) {
+		std::cerr << "Could not open the file - '" << fp << std::endl;
+	}
+
+	while (std::getline(input_file, line)) {
+		std::string EOH = line.substr(60, 72); // End Of Header
+		if (EOH.compare("END OF HEADER") == 0) 
+			break;
+	}
+	while (std::getline(input_file, line)) {
+
+	}
+
+	
 
 }
