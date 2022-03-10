@@ -187,6 +187,43 @@ void GNSS_f::ReadOBS(std::string fp) {
 	}
 	while (std::getline(input_file, line)) {
 
+		// 해야할 일 str2double 추가 짜기 ( 'E' 없을 때)
+		observation measurement 읽기.
+
+
+
+		int num_prn = str2double(line, 29, 30);
+		//std::cout << num_prn;
+		std::cout << line.size();
+		Obs ttemp;
+		ttemp.yy = str2double(line, 1, 2);
+		ttemp.mm = str2double(line, 4, 5);
+		ttemp.dd = str2double(line, 7, 8);
+
+		ttemp.hour = str2double(line, 10, 11);
+		ttemp.min = str2double(line, 13, 14);
+		ttemp.sec = str2double(line, 16, 24);
+
+		ttemp.prn = str2double(line, 4, 5);
+		ttemp.sec = str2double(line, 4, 5);
+		ttemp.sec = str2double(line, 4, 5);
+
+		while (1) {
+			int line1 = (line.size() - 32) / 3;
+
+			gnss_type_tmp = lin
+
+
+
+		}
+		for (int iter = 0; iter < num_prn; iter++) {
+			// empty인지 확인
+			//아니면 세 개 일고, type / prn number  읽음
+			//
+
+		}
+
+		break;
 	}
 
 	
