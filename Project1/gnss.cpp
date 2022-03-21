@@ -1,7 +1,7 @@
 #include "gnss.h"
 //#include <string>
 
- 
+
 GNSS_f::GNSS_f() {};
 
 void GNSS_f::setOBS() {
@@ -19,7 +19,7 @@ void GNSS_f::setDOY(std::string DOY) {
 }
 
 //struct GNSS_f::eph {};
-	
+
 
 double GNSS_f::str2double(std::string s, int a, int b) {
 	//int c = b - 3;
@@ -30,14 +30,14 @@ double GNSS_f::str2double(std::string s, int a, int b) {
 double GNSS_f::str2double2(std::string s, int a, int b) {
 
 	//double x =
-		return std::stof(s.substr(a, b - a + 1));
+	return std::stof(s.substr(a, b - a + 1));
 }
 
 
 void GNSS_f::ReadEPH(std::string fp) {
 	//std::vector<eph> ephs;
 	// File_Nav
-	
+
 	//std::vector<std::string> lines;
 	std::string line;
 
@@ -60,7 +60,7 @@ void GNSS_f::ReadEPH(std::string fp) {
 		std::string line_al = line.substr(60, 68);
 		//std::cout << line_al << std::endl;
 		if (line_al.compare("ION ALPHA") == 0) {
- 
+
 			al[0] = str2double(line, 3, 13);
 			al[1] = str2double(line, 15, 25);
 			al[2] = str2double(line, 27, 37);
@@ -95,7 +95,7 @@ void GNSS_f::ReadEPH(std::string fp) {
 
 		//std::cout << line.substr(2, 12) << std::endl;
 	}
-	
+
 
 	// navigation - GPS
 	int kkk = 0;
@@ -143,7 +143,7 @@ void GNSS_f::ReadEPH(std::string fp) {
 		V[20] = str2double(line, 60, 78); // Omega dot [rad/sec]
 
 		// line 6
-		std::getline(input_file, line); 
+		std::getline(input_file, line);
 
 		V[21] = str2double(line, 3, 21); // IDOT [rad/sec]
 		V[22] = str2double(line, 22, 40); // Codes on L2 channel
@@ -171,7 +171,7 @@ void GNSS_f::ReadEPH(std::string fp) {
 		// std::vector<eph> &a = eph(prn_n,V);
 		// a(prn_n, V);
 		//std::cout << kkk++;
-		
+
 	}
 	//std::cout << ephs[5].prn;
 }
@@ -183,10 +183,10 @@ void GNSS_f::ReadOBS(std::string fp) {
 	if (!input_file.is_open()) {
 		std::cerr << "Could not open the file - '" << fp << std::endl;
 	}
-	
+
 	std::vector<std::string> num_sigs;
 	while (std::getline(input_file, line)) {
-		 
+
 		std::string TOO = line.substr(60, 78);
 		if (TOO.compare("# / TYPES OF OBSERV") == 0)
 		{
@@ -210,10 +210,10 @@ void GNSS_f::ReadOBS(std::string fp) {
 				}
 				if (cnt_sig < int(num_sig - 1))
 				{
-					
+
 					std::getline(input_file, line);
 				}
-				if (cnt_sig == num_sig -1 )
+				if (cnt_sig == num_sig - 1)
 					break;
 
 			}
@@ -230,7 +230,7 @@ void GNSS_f::ReadOBS(std::string fp) {
 
 	while (std::getline(input_file, line)) {
 		std::string EOH = line.substr(60, 72); // End Of Header
-		if (EOH.compare("END OF HEADER") == 0) 
+		if (EOH.compare("END OF HEADER") == 0)
 			break;
 	}
 
@@ -262,16 +262,17 @@ void GNSS_f::ReadOBS(std::string fp) {
 		int cnt_prn = 0;
 		//std::cout << cnt_prn;
 		// GNSS 읽기,
-		std::string s;
+		//std::string s;
+		std::vector<char> gnss_types;
 		//double *prns = new double[num_prn];
 		std::vector<double> prns;
 		while (cnt_prn < num_prn) {
 			int line1 = (line.size() - 32) / 3;
 			//std::cout << line1;
 			for (int iter = 0; iter < line1; iter++) {
-				s[cnt_prn] = line[32 + iter * 3];
+				//s[cnt_prn] = line[32 + iter * 3];
+				gnss_types.push_back(line[32 + iter * 3]);
 				//prns[cnt_prn] = str2double2(line, 32 + iter * 3 + 1, 32 + iter * 3 + 2);
-				std::cout << "?";
 				prns.push_back(str2double2(line, 32 + iter * 3 + 1, 32 + iter * 3 + 2));
 				//s[cnt_prn] = 
 				//Obss.push_back(ttemp);
@@ -283,7 +284,7 @@ void GNSS_f::ReadOBS(std::string fp) {
 			std::getline(input_file, line);
 		}
 		std::cout << prns.size();
-		
+
 		//for (int iter = 0; iter < num_prn; iter++) {
 			// empty인지 확인
 			//아니면 세 개 일고, type / prn number  읽음
@@ -291,9 +292,14 @@ void GNSS_f::ReadOBS(std::string fp) {
 
 		//}
 		//delete prns;
-		break;
+
+		///////////////////////
+		//이제 measuremnet를 읽을 차례!
+			//?/////////////////
+
+			break;
 	}
 
-	
+
 
 }
