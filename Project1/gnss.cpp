@@ -21,12 +21,16 @@ void GNSS_f::setDOY(std::string DOY) {
 //struct GNSS_f::eph {};
 	
 
-
-
 double GNSS_f::str2double(std::string s, int a, int b) {
 	//int c = b - 3;
 	double x = pow(10, std::stof(s.substr(b - 2, b)));
 	return std::stof(s.substr(a, b - 4)) * x;
+}
+
+double GNSS_f::str2double2(std::string s, int a, int b) {
+
+	//double x =
+		return std::stof(s.substr(a, b - a + 1));
 }
 
 
@@ -179,50 +183,114 @@ void GNSS_f::ReadOBS(std::string fp) {
 	if (!input_file.is_open()) {
 		std::cerr << "Could not open the file - '" << fp << std::endl;
 	}
+	
+	std::vector<std::string> num_sigs;
+	while (std::getline(input_file, line)) {
+		 
+		std::string TOO = line.substr(60, 78);
+		if (TOO.compare("# / TYPES OF OBSERV") == 0)
+		{
+			//std::cout << 0;
+			double num_sig = str2double2(line, 4, 5);
+			std::cout << num_sig;
+			std::cout << "FD";
+			int cnt_sig = 0;
+			while (cnt_sig < num_sig) {
+				for (int iter = 0; iter < 9; iter++) {
+					//std::cout << line.substr(10 + iter * 6, 2);
+					//std::cout << "          ";
+					num_sigs.push_back(line.substr(10 + iter * 6, 10 * iter * 6 + 2));
+					cnt_sig++;
+					std::cout << cnt_sig;
+					if (cnt_sig == int(num_sig - 1))
+					{
+						std::cout << "here~";
+						break;
+					} // 돌다가 같아지면 break.
+				}
+				if (cnt_sig < int(num_sig - 1))
+				{
+					
+					std::getline(input_file, line);
+				}
+				if (cnt_sig == num_sig -1 )
+					break;
+
+			}
+
+			break;
+			// break;
+			if (cnt_sig == num_sig - 1)
+				break;
+
+		}
+
+	}
+
 
 	while (std::getline(input_file, line)) {
 		std::string EOH = line.substr(60, 72); // End Of Header
 		if (EOH.compare("END OF HEADER") == 0) 
 			break;
 	}
+
 	while (std::getline(input_file, line)) {
 
 		// 해야할 일 str2double 추가 짜기 ( 'E' 없을 때)
-		observation measurement 읽기.
+		//observation measurement 읽기.
 
 
 
 		int num_prn = str2double(line, 29, 30);
 		//std::cout << num_prn;
-		std::cout << line.size();
+		//std::cout << line.size();
 		Obs ttemp;
-		ttemp.yy = str2double(line, 1, 2);
-		ttemp.mm = str2double(line, 4, 5);
-		ttemp.dd = str2double(line, 7, 8);
+		ttemp.yy = str2double2(line, 1, 2);
+		ttemp.mm = str2double2(line, 4, 5);
+		ttemp.dd = str2double2(line, 7, 8);
 
-		ttemp.hour = str2double(line, 10, 11);
-		ttemp.min = str2double(line, 13, 14);
-		ttemp.sec = str2double(line, 16, 24);
+		ttemp.hour = str2double2(line, 10, 11);
+		ttemp.min = str2double2(line, 13, 14);
+		ttemp.sec = str2double2(line, 16, 24);
 
-		ttemp.prn = str2double(line, 4, 5);
-		ttemp.sec = str2double(line, 4, 5);
-		ttemp.sec = str2double(line, 4, 5);
+		ttemp.prn = str2double2(line, 30, 31);
+		//ttemp.sec = str2double2(line, 4, 5);
+		//ttemp.sec = str2double2(line, 4, 5);
+		//std::cout << ttemp.prn;
+		//std::cout << ttemp.min;
 
-		while (1) {
+		int cnt_prn = 0;
+		//std::cout << cnt_prn;
+		// GNSS 읽기,
+		std::string s;
+		//double *prns = new double[num_prn];
+		std::vector<double> prns;
+		while (cnt_prn < num_prn) {
 			int line1 = (line.size() - 32) / 3;
-
-			gnss_type_tmp = lin
-
-
-
+			//std::cout << line1;
+			for (int iter = 0; iter < line1; iter++) {
+				s[cnt_prn] = line[32 + iter * 3];
+				//prns[cnt_prn] = str2double2(line, 32 + iter * 3 + 1, 32 + iter * 3 + 2);
+				std::cout << "?";
+				prns.push_back(str2double2(line, 32 + iter * 3 + 1, 32 + iter * 3 + 2));
+				//s[cnt_prn] = 
+				//Obss.push_back(ttemp);
+				cnt_prn++;
+				//std::cout << ttemp.prn;
+			}
+			//break;
+			//gnss_type_tmp = lin
+			std::getline(input_file, line);
 		}
-		for (int iter = 0; iter < num_prn; iter++) {
+		std::cout << prns.size();
+		
+		//for (int iter = 0; iter < num_prn; iter++) {
 			// empty인지 확인
 			//아니면 세 개 일고, type / prn number  읽음
 			//
 
-		}
-
+		//}
+		//delete prns;
 		break;
 	}
 

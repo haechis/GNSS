@@ -20,6 +20,7 @@ public:
 	void setDOY(std::string DOY);
 	void setOBS();
 	double str2double(std::string s, int a, int b);
+	double str2double2(std::string s, int a, int b);
 
 	void ReadEPH(std::string fp);
 	void ReadOBS(std::string fp);
@@ -33,7 +34,7 @@ public:
 		double min;
 		double sec;
 
-		char gnss_type; // GRECJ ..
+		std::string gnss_type; // GRECJ ..
 		int prn;
 		double meas; // measurement
 		Obs() {
@@ -45,7 +46,7 @@ public:
 			double min = 0;
 			double sec = 0;
 
-			char gnss_type = 0; // GRECJ ..
+			std::string gnss_type = ""; // GRECJ ..
 			int prn = 0;
 			double meas = 0;
 		}

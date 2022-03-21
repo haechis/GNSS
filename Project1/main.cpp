@@ -15,7 +15,7 @@ int main(void) {
 	// std::cout << gf.File_nav;
 	
 	// create file name
-	std::string filename(gf.File_nav);
+	std::string filename(gf.File_nav); 
 	//std::ifstream readFile;
 
 	gf.ReadEPH(filename); // saved in ephs (gnss.cpp)
