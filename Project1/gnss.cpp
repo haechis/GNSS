@@ -184,7 +184,7 @@ void GNSS_f::ReadOBS(std::string fp) {
 		std::cerr << "Could not open the file - '" << fp << std::endl;
 	}
 
-	std::vector<std::string> num_sigs;
+	std::vector<std::string> num_sigs; // Observation Types.
 	while (std::getline(input_file, line)) {
 
 		std::string TOO = line.substr(60, 78);
@@ -263,7 +263,7 @@ void GNSS_f::ReadOBS(std::string fp) {
 		//std::cout << cnt_prn;
 		// GNSS 읽기,
 		//std::string s;
-		std::vector<char> gnss_types;
+		std::vector<char> gnss_types; // 
 		//double *prns = new double[num_prn];
 		std::vector<double> prns;
 		while (cnt_prn < num_prn) {
@@ -296,6 +296,12 @@ void GNSS_f::ReadOBS(std::string fp) {
 		///////////////////////
 		//이제 measuremnet를 읽을 차례!
 			//?/////////////////
+		for (int iter = 0; iter < num_sigs.size(); iter++)
+		{
+
+
+		}
+
 
 			break;
 	}
