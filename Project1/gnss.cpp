@@ -24,13 +24,13 @@ void GNSS_f::setDOY(std::string DOY) {
 double GNSS_f::str2double(std::string s, int a, int b) {
 	//int c = b - 3;
 	double x = pow(10, std::stof(s.substr(b - 2, b)));
-	return std::stof(s.substr(a, b - 4)) * x;
+	return std::stod(s.substr(a, b - 4)) * x;
 }
 
 double GNSS_f::str2double2(std::string s, int a, int b) {
 
 	//double x =
-	return std::stof(s.substr(a, b - a + 1));
+	return std::stod(s.substr(a, b - a + 1));
 }
 
 
@@ -296,9 +296,36 @@ void GNSS_f::ReadOBS(std::string fp) {
 		///////////////////////
 		//이제 measuremnet를 읽을 차례!
 			//?/////////////////
+		//std::cout << "sig 개수"; 10
+		//std::cout << num_sigs.size();
+		//std::cout << line;
+		std::cout<<"    ";
+		double meas_temp;
+		int cnt_sig = 0;
+		int jump_line = num_sigs.size() / 5;
+		for (int iter = 0; iter < gnss_types.size(); iter++) {
+			for (int j_line = 0; j_line < jump_line; j_line++) {
+
+				if (j_line == jump_line - 1) { // 마지막 줄
+					// num_sigs[cnt_sig]; // 해당 signal
+
+				}
+				else {
+					for (int kk = 0; kk < 5; kk ++ ) {
+						meas_temp = str2double2(line,15 * kk + 2, 15 * kk + 13);
+					}
+				}
+				meas_temp = 
+
+				std::getline(input_file, line);
+			}
+		}
+
 		for (int iter = 0; iter < num_sigs.size(); iter++)
 		{
 
+			// (1) 2,13 (2) 17 19 (3) 34 45
+			// 15n + 2
 
 		}
 
