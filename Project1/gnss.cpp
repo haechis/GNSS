@@ -202,12 +202,13 @@ void GNSS_f::ReadOBS(std::string fp) {
 					num_sigs.push_back(line.substr(10 + iter * 6, 10 * iter * 6 + 2));
 					cnt_sig++;
 					std::cout << cnt_sig;
-					if (cnt_sig == int(num_sig - 1))
+					if (cnt_sig == int(num_sig))
 					{
 						std::cout << "here~";
 						break;
 					} // 돌다가 같아지면 break.
 				}
+
 				if (cnt_sig < int(num_sig - 1))
 				{
 
@@ -225,6 +226,7 @@ void GNSS_f::ReadOBS(std::string fp) {
 
 		}
 
+
 	}
 
 
@@ -235,7 +237,9 @@ void GNSS_f::ReadOBS(std::string fp) {
 	}
 
 	while (std::getline(input_file, line)) {
-
+		std::cout << "new start";
+		std::cout << "\n";
+		std::cout<<line;
 		// 해야할 일 str2double 추가 짜기 ( 'E' 없을 때)
 		//observation measurement 읽기.
 
@@ -266,6 +270,7 @@ void GNSS_f::ReadOBS(std::string fp) {
 		std::vector<char> gnss_types; // 
 		//double *prns = new double[num_prn];
 		std::vector<double> prns;
+		
 		while (cnt_prn < num_prn) {
 			int line1 = (line.size() - 32) / 3;
 			//std::cout << line1;
@@ -299,38 +304,92 @@ void GNSS_f::ReadOBS(std::string fp) {
 		//std::cout << "sig 개수"; 10
 		//std::cout << num_sigs.size();
 		//std::cout << line;
-		std::cout<<"    ";
+		
 		double meas_temp;
 		int cnt_sig = 0;
-		int jump_line = num_sigs.size() / 5;
-		for (int iter = 0; iter < gnss_types.size(); iter++) {
+		int cnt = 0;
+		int jump_line = num_sigs.size() / 5 + 1;
+
+		for (int iter = 0; iter < prns.size() ; iter++) {
+			std::cout << " Line Jump ";
+			std::cout << prns.size() * (num_sigs.size() / 5 + 1) - 1;
+			std::cout << "iter";
+			std::cout << iter;
 			for (int j_line = 0; j_line < jump_line; j_line++) {
-
-				if (j_line == jump_line - 1) { // 마지막 줄
+				std::cout << "\n";
+				//std::cout << "j_line";
+				//std::cout << j_line;
+				//std::cout << "jump_line -1";
+				//std::cout << jump_line-1;
+				if (j_line == (jump_line-1) ) { // 마지막 줄
 					// num_sigs[cnt_sig]; // 해당 signal
-
+					
+					for (int kk = 0; kk < num_sigs.size() - (jump_line-1)*5; kk++) {
+						std::cout << "DLFKHJSDLKFJDSL";
+						if (line.size() < 16 * kk + 1) continue;
+						if (line.substr(16 * kk + 1, 13) == "            ") continue;
+						
+						meas_temp = str2double2(line, 16 * kk + 1,13);
+						std::cout << "\n";
+						std::cout << meas_temp;
+						ttemp.PRN_s.push_back(prns[cnt]);
+						ttemp.MEAS_s.push_back(meas_temp);
+						ttemp.PRN_types.push_back(gnss_types[cnt]);
+						cnt++;
+					}
 				}
 				else {
 					for (int kk = 0; kk < 5; kk ++ ) {
-						meas_temp = str2double2(line,15 * kk + 2, 15 * kk + 13);
+						//std::cout << "\n";
+						//std::cout << kk;
+						
+						
+						// std::stod(s.substr(a, b - a + 1))
+						if (line.size() < 16 * kk + 1) continue;
+						if(line.substr(16*kk+1,12) == "            ") continue;
+						
+						//if (std::stod(line.substr(15 * kk + 2, 15 * kk + 13)) == 0) continue;
+						std::cout << "\n";
+						std::cout << kk;
+						std::cout << ":  ";
+						std::cout << line.substr(16 * kk + 1, 13);
+						meas_temp = str2double2(line, 16 * kk + 1, 13);
+						//std::cout << "\n";
+						//std::cout << meas_temp;
+
+						
+						ttemp.PRN_s.push_back(prns[cnt]);
+						ttemp.MEAS_s.push_back(meas_temp);
+						ttemp.PRN_types.push_back(gnss_types[cnt]);
+						cnt++;
 					}
+					std::cout << "Enter";
 				}
-				meas_temp = 
-
+				//meas_temp = 
+				if (iter == prns.size() - 1) break;
 				std::getline(input_file, line);
+				
 			}
+			cnt = 0;
 		}
 
-		for (int iter = 0; iter < num_sigs.size(); iter++)
-		{
-
-			// (1) 2,13 (2) 17 19 (3) 34 45
+			// (1) 1,13 (2) 17 29 (3) 33 45 
 			// 15n + 2
+		
+		/*for (int i = 0; i < ttemp.PRN_s.size(); i++) {
+			std::cout << "prn";
+			std::cout << ttemp.PRN_s[i];
+			std::cout << "   ";
+			std::cout << ttemp.MEAS_s[i];
+			std::cout << "   ";
+			std::cout << ttemp.PRN_types[i];
+			std::cout << "   ";
 
-		}
+		}*/
 
 
-			break;
+
+			//break;
 	}
 
 

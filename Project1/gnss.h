@@ -37,6 +37,11 @@ public:
 		std::string gnss_type; // GRECJ ..
 		int prn;
 		double meas; // measurement
+		
+		std::vector<int> PRN_s;
+		std::vector<double> MEAS_s;
+		std::vector<char> PRN_types;
+
 		Obs() {
 			double yy = 0;
 			double mm = 0;
@@ -49,6 +54,7 @@ public:
 			std::string gnss_type = ""; // GRECJ ..
 			int prn = 0;
 			double meas = 0;
+			
 		}
 		
 	}
