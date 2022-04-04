@@ -247,7 +247,7 @@ void GNSS_f::ReadOBS(std::string fp) {
 
 		int num_prn = str2double(line, 29, 30);
 		//std::cout << num_prn;
-		//std::cout << line.size();
+		//std::cout << line.size();5
 		Obs ttemp;
 		ttemp.yy = str2double2(line, 1, 2);
 		ttemp.mm = str2double2(line, 4, 5);

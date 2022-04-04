@@ -11,6 +11,7 @@ int main(void) {
 	GNSS_f gf;
 	gf.setSite("SEOS");
 	gf.setDOY("032");
+
 	gf.setOBS();
 	// std::cout << gf.File_nav;
 	
