@@ -309,18 +309,15 @@ void GNSS_f::ReadOBS(std::string fp) {
 		int cnt_sig = 0;
 		int cnt = 0;
 		int jump_line = num_sigs.size() / 5 + 1;
-
-		for (int iter = 0; iter < prns.size() ; iter++) {
+		int iter;
+		for (iter = 0; iter < prns.size() ; iter++) {
 			std::cout << " Line Jump ";
 			std::cout << prns.size() * (num_sigs.size() / 5 + 1) - 1;
 			std::cout << "iter";
 			std::cout << iter;
 			for (int j_line = 0; j_line < jump_line; j_line++) {
 				std::cout << "\n";
-				//std::cout << "j_line";
-				//std::cout << j_line;
-				//std::cout << "jump_line -1";
-				//std::cout << jump_line-1;
+
 				if (j_line == (jump_line-1) ) { // 마지막 줄
 					// num_sigs[cnt_sig]; // 해당 signal
 					
@@ -365,31 +362,21 @@ void GNSS_f::ReadOBS(std::string fp) {
 					}
 					std::cout << "Enter";
 				}
-				//meas_temp = 
-				if (iter == prns.size() - 1) break;
+				  
+				//^^^^^//  여기서 중단 설정을 걸고, break로 인해 std getline이 먹히는지 안먹히는지 확인을 해보자.
+				if (iter == prns.size()-1) {
+					std::cout<<"DFJSLDFJLSDFJSLDFJSDLKFJSLDFJSLDKFJSLDKFJDSLKF";
+					//std::getline(input_file, line);
+					break;
+				}
 				std::getline(input_file, line);
 				
 			}
 			cnt = 0;
 		}
 
-			// (1) 1,13 (2) 17 29 (3) 33 45 
-			// 15n + 2
-		
-		/*for (int i = 0; i < ttemp.PRN_s.size(); i++) {
-			std::cout << "prn";
-			std::cout << ttemp.PRN_s[i];
-			std::cout << "   ";
-			std::cout << ttemp.MEAS_s[i];
-			std::cout << "   ";
-			std::cout << ttemp.PRN_types[i];
-			std::cout << "   ";
-
-		}*/
 
 
-
-			//break;
 	}
 
 
