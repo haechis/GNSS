@@ -25,6 +25,7 @@ int main(void) {
 	//std::ifstream readFile;
 
 	gf.ReadOBS(filename2);
+	std::cout << "END";
 
 
 

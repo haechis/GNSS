@@ -174,6 +174,7 @@ void GNSS_f::ReadEPH(std::string fp) {
 
 	}
 	//std::cout << ephs[5].prn;
+	input_file.close();
 }
 
 void GNSS_f::ReadOBS(std::string fp) {
@@ -236,10 +237,39 @@ void GNSS_f::ReadOBS(std::string fp) {
 			break;
 	}
 
-	while (std::getline(input_file, line)) {
-		std::cout << "new start";
-		std::cout << "\n";
-		std::cout<<line;
+	int first_epoch = 0;
+	while (!input_file.eof()) {
+		
+		std::cout << " ";
+		//std::cout << first_epoch;
+			
+		if (first_epoch == 2879)
+			std::cout << line;
+		if (first_epoch == 0) {
+			std::getline(input_file, line);
+			//first_epoch = 1;
+		}
+		//else
+		//	break;
+		if (input_file.peek() == EOF)
+			break;
+
+
+		first_epoch++;
+
+		//if(input_file.eof() == EOF)
+			
+		//if (getline(input_file, line)) {
+
+		//}
+		//else
+		//	break;
+		//if (first_epoch == 3)
+		//	break;
+
+		//std::cout << "new start";
+		//std::cout << "\n";
+		//std::cout<<line;
 		// 해야할 일 str2double 추가 짜기 ( 'E' 없을 때)
 		//observation measurement 읽기.
 
@@ -288,7 +318,7 @@ void GNSS_f::ReadOBS(std::string fp) {
 			//gnss_type_tmp = lin
 			std::getline(input_file, line);
 		}
-		std::cout << prns.size();
+		//std::cout << prns.size();
 
 		//for (int iter = 0; iter < num_prn; iter++) {
 			// empty인지 확인
@@ -311,24 +341,24 @@ void GNSS_f::ReadOBS(std::string fp) {
 		int jump_line = num_sigs.size() / 5 + 1;
 		int iter;
 		for (iter = 0; iter < prns.size() ; iter++) {
-			std::cout << " Line Jump ";
-			std::cout << prns.size() * (num_sigs.size() / 5 + 1) - 1;
-			std::cout << "iter";
-			std::cout << iter;
+			//std::cout << " Line Jump ";
+			//std::cout << prns.size() * (num_sigs.size() / 5 + 1) - 1;
+			//std::cout << "iter";
+			//std::cout << iter;
 			for (int j_line = 0; j_line < jump_line; j_line++) {
-				std::cout << "\n";
+				//std::cout << "\n";
 
 				if (j_line == (jump_line-1) ) { // 마지막 줄
 					// num_sigs[cnt_sig]; // 해당 signal
 					
 					for (int kk = 0; kk < num_sigs.size() - (jump_line-1)*5; kk++) {
-						std::cout << "DLFKHJSDLKFJDSL";
+					//	std::cout << "DLFKHJSDLKFJDSL";
 						if (line.size() < 16 * kk + 1) continue;
 						if (line.substr(16 * kk + 1, 13) == "            ") continue;
 						
 						meas_temp = str2double2(line, 16 * kk + 1,13);
-						std::cout << "\n";
-						std::cout << meas_temp;
+						//std::cout << "\n";
+						//std::cout << meas_temp;
 						ttemp.PRN_s.push_back(prns[cnt]);
 						ttemp.MEAS_s.push_back(meas_temp);
 						ttemp.PRN_types.push_back(gnss_types[cnt]);
@@ -346,10 +376,10 @@ void GNSS_f::ReadOBS(std::string fp) {
 						if(line.substr(16*kk+1,12) == "            ") continue;
 						
 						//if (std::stod(line.substr(15 * kk + 2, 15 * kk + 13)) == 0) continue;
-						std::cout << "\n";
-						std::cout << kk;
-						std::cout << ":  ";
-						std::cout << line.substr(16 * kk + 1, 13);
+						//std::cout << "\n";
+						//std::cout << kk;
+						//std::cout << ":  ";
+						//std::cout << line.substr(16 * kk + 1, 13);
 						meas_temp = str2double2(line, 16 * kk + 1, 13);
 						//std::cout << "\n";
 						//std::cout << meas_temp;
@@ -360,25 +390,34 @@ void GNSS_f::ReadOBS(std::string fp) {
 						ttemp.PRN_types.push_back(gnss_types[cnt]);
 						cnt++;
 					}
-					std::cout << "Enter";
+					//std::cout << "Enter";
 				}
-				  
+				 
+				/*
 				//^^^^^//  여기서 중단 설정을 걸고, break로 인해 std getline이 먹히는지 안먹히는지 확인을 해보자.
-				if (iter == prns.size()-1) {
+				if (iter == prns.size()) {
 					std::cout<<"DFJSLDFJLSDFJSLDFJSDLKFJSLDFJSLDKFJSLDKFJDSLKF";
 					//std::getline(input_file, line);
 					break;
 				}
-				std::getline(input_file, line);
+				else
 				
-			}
+				*/
+				if (std::getline(input_file, line)) {}
+				else
+					break;
+
+				if (input_file.peek() == EOF)
+					break;
+
+			} // for jump line
 			cnt = 0;
-		}
+		} //for iter
 
 
 
 	}
-
-
+	std::cout << "End -> Read OBS";
+	input_file.close();
 
 }
