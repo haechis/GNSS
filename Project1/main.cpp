@@ -28,7 +28,7 @@ int main(void) {
 	std::cout << "END";
 
 
-
+	fg
 	//readFile.open(gf.File_nav);
 	// 내일 할 일: obs 파일 한 줄씩 읽기 -> gnss cpp 이용~
 	//readFile.close();
